@@ -12,12 +12,17 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
+@NamedStoredProcedureQuery(name = "users.get", procedureName = "user_check", parameters = {
+        @StoredProcedureParameter(mode = ParameterMode.IN, name = "CLIENT_ID", type = String.class),
+        @StoredProcedureParameter(mode = ParameterMode.OUT, name = "Exists", type = Integer.class)
+          })
 public class Users extends BaseIdEntity implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
